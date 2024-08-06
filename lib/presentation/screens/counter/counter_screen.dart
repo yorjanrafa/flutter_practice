@@ -15,7 +15,7 @@ class _CounterScreenState extends State<CounterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Counter screen'),
+        title: Center(child: const Text('Counter screen')),
       ),
       body: Center(
         child: Column(
@@ -24,22 +24,43 @@ class _CounterScreenState extends State<CounterScreen> {
             Text('$clickCount',
                 style: const TextStyle(
                     fontSize: 120, fontWeight: FontWeight.w100)),
-            const Text('puto si lo sigues leyendo',
-                style: TextStyle(fontSize: 20)),
-            const Text('triple  pluto si lo sigues',
-                style: TextStyle(fontSize: 20)),
+            if (clickCount == 1)
+              const Text('Click', style: TextStyle(fontSize: 20)),
+            if (clickCount != 1)
+              const Text('Clicks', style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            clickCount++;
-          });
-        },
-        tooltip: 'Increment',
-        child: const Icon(
-          Icons.plus_one,
+
+      // create a action button for decrement the counter
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove),
+              onPressed: () {
+                setState(() {
+                  clickCount--;
+                  if (clickCount < 0) {
+                    clickCount = 0;
+                  }
+                });
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                setState(() {
+                  clickCount++;
+                  if (clickCount > 10) {
+                    clickCount = 0;
+                  }
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
